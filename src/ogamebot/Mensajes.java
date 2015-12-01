@@ -132,4 +132,12 @@ public class Mensajes {
             System.out.println(Utils.getHour()+" - Mi emperador, se han descartado "+cantidad+" mensajes que no eran importantes.");
         }
     }
+    
+    /**
+     * Cierra la página del navegador
+     */
+    public void close(){
+        page.cleanUp();
+        page.remove();
+    }
 }

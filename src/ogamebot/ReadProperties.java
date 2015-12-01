@@ -43,7 +43,7 @@ public class ReadProperties {
             System.out.println("Ha fallado la carga de las propiedades: " + ex.getMessage());
         }
     }
-
+    
     public Double getDeuterio() {
         return deuterio;
     }

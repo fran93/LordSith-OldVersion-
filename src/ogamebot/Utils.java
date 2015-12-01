@@ -1,7 +1,11 @@
 package ogamebot;
 
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.WebWindow;
+import static java.lang.Thread.sleep;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  *
@@ -60,5 +64,38 @@ public class Utils {
      */
     public static boolean CristalOverflow(double[] recursos){
         return recursos[2] > recursos[1];
+    }
+    
+    /**
+     * Método que libera la memoria del navegador
+     * @param wc 
+     */
+    public static void freeMemory(WebClient wc) {
+        List<WebWindow> windows = wc.getWebWindows();
+        for (WebWindow wd : windows) {
+            // wd.getThreadManager().interruptAll();
+            wd.getJobManager().removeAllJobs();
+            wd.getJobManager().shutdown();
+        }
+        wc.closeAllWindows();
+    }
+    
+    /**
+     * Función que sale de la aplicación cuando pasa un tiempo determinado, esto permite que el programa finaliza en caso de que de excepción
+     */
+    public static void exitWhenTimeOut(){
+        Thread t1 = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    sleep(60000 * 30);
+                    System.out.println(Utils.getHour()+" - ¡Despierte mi emperador!");
+                    System.exit(0);
+                } catch (InterruptedException ex) {
+                    System.exit(0);
+                }
+            }
+        };
+        t1.start();
     }
 }

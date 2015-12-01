@@ -74,17 +74,20 @@ public class RecursosEdificios {
         //obtener cristal
         HtmlListItem cristal = (HtmlListItem) page.getElementById("crystal_box");
         level = (HtmlSpan)cristal.getElementsByTagName("span").get(0);
+        //prevenir Empty string exception
         recursos[2] = Double.parseDouble(level.asText().replaceAll("\\.", "")); 
         //obtener deuterio
         HtmlListItem deuterio = (HtmlListItem) page.getElementById("deuterium_box");
         level = (HtmlSpan)deuterio.getElementsByTagName("span").get(0);
+        //prevenir Empty string exception
         recursos[3] = Double.parseDouble(level.asText().replaceAll("\\.", "")); 
         
         //obtener los recursos de la colonia
         colonialMaxResources=properties.getColonialResources();
         
         //obtener si se está construyendo algo
-        construyendo = !page.asText().contains("No hay edificios en construcción");
+        construyendo = !page.asText().contains("No hay edificios en construcción");     
+        close();
     }
 
     public double[] getRecursos() {
@@ -103,7 +106,9 @@ public class RecursosEdificios {
         return recursos[1]+recursos[2]+recursos[3]>colonialMaxResources;
     }
     
-    
-    
-    
+    private void close(){
+       page.cleanUp();
+       page.remove();
+   }
+
 }

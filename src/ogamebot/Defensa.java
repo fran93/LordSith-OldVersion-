@@ -42,7 +42,7 @@ public class Defensa {
         }
     }
 
-    public void buildSmallLaser() throws IOException {
+    public void buildSmallLaser(int cantidad) throws IOException {
         page = webClient.getPage("http://s132-es.ogame.gameforge.com/game/index.php?page=defense&cp=" + cp);
 
         try {
@@ -53,7 +53,7 @@ public class Defensa {
             webClient.waitForBackgroundJavaScript(5000);
             //obtener la caja de texto
             HtmlInput caja = (HtmlInput) page.getElementById("number");
-            caja.setValueAttribute("9999");
+            caja.setValueAttribute(String.valueOf(cantidad));
             //obtener el botón en cola 
             HtmlAnchor build = (HtmlAnchor) page.getFirstByXPath("//a[@class='build-it']");
             build.click();
@@ -121,4 +121,9 @@ public class Defensa {
             System.out.println(Utils.getHour() + " - Mi emperador, no ha sido posible la construcción de plasmas. " + ex);
         }
     }
+    
+    public void close(){
+       page.cleanUp();
+       page.remove();
+   }
 }

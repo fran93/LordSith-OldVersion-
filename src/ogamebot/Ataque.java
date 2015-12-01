@@ -6,9 +6,12 @@ import com.gargoylesoftware.htmlunit.html.HtmlDivision;
 import com.gargoylesoftware.htmlunit.html.HtmlInput;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Properties;
 
 /**
  *
@@ -19,7 +22,7 @@ public class Ataque {
     private HtmlPage page;
     private int actuales, maximas, smallShip;
     private ArrayList<Cordenadas> cordenadas = new ArrayList<>();
-    private static int index = 0;
+    private  int index;
     private final String SHIPS_TO_SEND;
     
     public Ataque(WebClient webClient, ReadProperties properties, String cp) throws IOException{
@@ -39,6 +42,8 @@ public class Ataque {
         smallShip = Integer.parseInt(page.getElementById("button202").asText().replaceAll("[\\D]", ""));
         //cantidad de naves 
         SHIPS_TO_SEND = properties.getSmallCargo();
+        //obtener la posición actual de la lista de granjas
+        index = getFarmPosition();
     }
     
     /**
@@ -70,6 +75,7 @@ public class Ataque {
             //aumento el índice para que la próxima vez lea el siguiente objetivo
             index++;
         }
+        setFarmPosition(index);
     }
     
     private void enviarAtaque() throws IOException, NullPointerException{
@@ -100,7 +106,6 @@ public class Ataque {
         //consumo un slot de flotas y 10 naves
         actuales++;
         smallShip-=10;
-
         System.out.println(Utils.getHour() + " - Ataque enviado a "+buff);
     }
     
@@ -127,4 +132,31 @@ public class Ataque {
         String[] dummy = exp.asText().split("/");
         actuales = Integer.parseInt(dummy[0].replaceAll("[\\D]", ""));
    }
+   
+   public void close(){
+       page.cleanUp();
+       page.remove();
+   }
+
+    private int getFarmPosition() {
+        try{
+            FileInputStream in = new FileInputStream("ataque.properties");
+            Properties propiedades = new Properties();
+            propiedades.load(in);
+            return Integer.parseInt(propiedades.getProperty("farmPosition"));
+        }catch(IOException ex){
+            return 0;
+        }
+    }
+    
+    private void setFarmPosition(int index){
+        try {
+            FileOutputStream out = new FileOutputStream("ataque.properties");
+            Properties propiedades = new Properties();
+            propiedades.setProperty("farmPosition", String.valueOf(index));
+            propiedades.store(out, null);          
+        } catch (IOException ex) {
+            System.out.println(Utils.getHour()+" - Fallo guardando la posición de la granja.");
+        }
+    }
 }

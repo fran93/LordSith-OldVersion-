@@ -19,9 +19,9 @@ public class Login {
 
     public Login(WebClient webClient, String user, String password) throws IOException {
         this.webClient = webClient;
+        
         page = this.webClient.getPage("http://es.ogame.gameforge.com/");
-
-        //cambio el universo
+         //cambio el universo
         HtmlSelect select = (HtmlSelect) page.getElementById("serverLogin");
         HtmlOption option = select.getOptionByValue("s132-es.ogame.gameforge.com");
         select.setSelectedAttribute(option, true);
@@ -45,9 +45,10 @@ public class Login {
             System.out.println(Utils.getHour() + " - Bienvenido mi emperador, espero sus órdenes.");
         }
     }
-
+    
     public void salir() throws IOException {
         page = webClient.getPage("http://s132-es.ogame.gameforge.com/game/index.php?page=logout");
-        webClient.closeAllWindows();
+        page.cleanUp();
+        page.remove();
     }
 }

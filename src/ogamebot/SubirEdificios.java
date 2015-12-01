@@ -113,6 +113,8 @@ public class SubirEdificios {
                 build.click();
                 break;
         }
-
+        
+        page.cleanUp();
+        page.remove();
     }
 }

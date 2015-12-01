@@ -5,7 +5,10 @@ import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlDivision;
 import com.gargoylesoftware.htmlunit.html.HtmlInput;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Properties;
 
 /**
  *
@@ -16,7 +19,7 @@ public class Expediciones {
     final private WebClient webClient;
     private HtmlPage page;
     private final int actuales, maximas, bigShip, naveExpedicion;
-    private static int sistema = 105;
+    private int sistema;
     private final String bigCargo;
 
 
@@ -37,6 +40,8 @@ public class Expediciones {
         //obtengo las propiedades
         naveExpedicion = properties.getNaveExpedicion();
         bigCargo = properties.getBigCargo();
+        //obtener la posición de la última expedición
+        sistema = getExpPosition();
     }
 
     /**
@@ -86,8 +91,36 @@ public class Expediciones {
             System.out.println(Utils.getHour() + " - Expedición enviada al sistema "+sistema+".");
             //la siguiente expedición será enviada a otro sistema
             sistema++;
+            setExpPosition(sistema);
         } catch (NullPointerException ex) {
             System.out.println(Utils.getHour() + " - Mi emperador, la expedición no pudo ser enviada por causa de problemas técnicos.");
+        }
+    }
+    
+    public void close(){
+       page.cleanUp();
+       page.remove();
+   }
+    
+    private int getExpPosition() {
+        try{
+            FileInputStream in = new FileInputStream("expe.properties");
+            Properties propiedades = new Properties();
+            propiedades.load(in);
+            return Integer.parseInt(propiedades.getProperty("expPosition"));
+        }catch(IOException ex){
+            return 105;
+        }
+    }
+    
+    private void setExpPosition(int index){
+        try {
+            FileOutputStream out = new FileOutputStream("expe.properties");
+            Properties propiedades = new Properties();
+            propiedades.setProperty("expPosition", String.valueOf(index));
+            propiedades.store(out, null);          
+        } catch (IOException ex) {
+            System.out.println(Utils.getHour()+" - Fallo guardando la posición de la granja.");
         }
     }
 

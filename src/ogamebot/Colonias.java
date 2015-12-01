@@ -74,4 +74,9 @@ public class Colonias {
             System.out.println(Utils.getHour() + " - Mi emperador, la expedición no pudo ser enviada por causa de problemas técnicos.");
         }
     }
+    
+    public void close(){
+       page.cleanUp();
+       page.remove();
+   }
 }

@@ -20,7 +20,7 @@ public class Planetas {
     
     public Planetas(WebClient webClient) throws IOException{
         this.webClient=webClient;
-       
+        
         page = this.webClient.getPage("http://s132-es.ogame.gameforge.com/game/index.php?page=overview");
         //obtener la lista de los planetas
         HtmlDivision planetList = (HtmlDivision) page.getElementById("planetList");
@@ -30,6 +30,7 @@ public class Planetas {
             planets.add(div.getId().replaceAll("[\\D]", ""));
             underAttack.add(checkIsUnderAttack(div));
         }
+        close();
     }
     
     /**
@@ -69,4 +70,9 @@ public class Planetas {
         } 
         return buff;
     }
+    
+    private void close(){
+       page.cleanUp();
+       page.remove();
+   }
 }
