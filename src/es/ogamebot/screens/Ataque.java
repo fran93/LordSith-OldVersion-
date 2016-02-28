@@ -32,7 +32,7 @@ public class Ataque {
         this.webClient=webClient;
         
         //obteniendo los datos
-        page = this.webClient.getPage("http://s132-es.ogame.gameforge.com/game/index.php?page=fleet1&cp="+cp);
+        page = this.webClient.getPage("http://s"+Utils.getUniverso()+"-es.ogame.gameforge.com/game/index.php?page=fleet1&cp="+cp);
         //obteniendo las flotas
         HtmlDivision slots = (HtmlDivision) page.getElementById("slots");
         //obteniendo div de las flotas
@@ -85,7 +85,7 @@ public class Ataque {
         //obtener las cordenadas
         Cordenadas buff = cordenadas.get(index);
         //página que te selecciona automáticamente la misión atacar
-        page = webClient.getPage("http://s132-es.ogame.gameforge.com/game/index.php?page=fleet1&galaxy="
+        page = webClient.getPage("http://s"+Utils.getUniverso()+"-es.ogame.gameforge.com/game/index.php?page=fleet1&galaxy="
         + buff.getGalaxia()+ "&system="+buff.getSistema()+"&position="+buff.getPlaneta()+"&type=1&mission=1");
         //añadir 10 pequeñas de carga
         HtmlInput smallShipInput = (HtmlInput) page.getElementById("ship_202");
