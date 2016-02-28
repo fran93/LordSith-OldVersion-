@@ -22,7 +22,7 @@ public class Colonias {
         public Colonias(WebClient webClient, ReadDB properties, String cp) throws IOException{
             this.webClient=webClient;     
             //obteniendo los datos
-            page = this.webClient.getPage("http://s132-es.ogame.gameforge.com/game/index.php?page=fleet1&galaxy=2&system=106&position=6&type=1&mission=3&cp="+cp);
+            page = this.webClient.getPage("http://s"+Utils.getUniverso()+"-es.ogame.gameforge.com/game/index.php?page=fleet1&galaxy=2&system=106&position=6&type=1&mission=3&cp="+cp);
             //obteniendo las flotas
             HtmlDivision slots = (HtmlDivision) page.getElementById("slots");
             //obteniendo div de las flotas
@@ -76,9 +76,4 @@ public class Colonias {
             Utils.printLog("Mi emperador, la expedición no pudo ser enviada por causa de problemas técnicos.");
         }
     }
-    
-    public void close(){
-       page.cleanUp();
-       page.remove();
-   }
 }

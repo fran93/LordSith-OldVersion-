@@ -2,20 +2,22 @@ package es.ogamebot.utils;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.WebWindow;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.gargoylesoftware.htmlunit.javascript.background.JavaScriptJobManager;
 import es.ogamebot.database.InsertSQL;
 import es.ogamebot.database.ManageDB;
+import es.ogamebot.database.SelectSQL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import static java.lang.Thread.sleep;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
  * @author Fran1488
  */
 public class Utils {
+    private static int universo=0;
 
     public static int getBuildingToBuild(double[] recursos, int[] minas, ReadDB properties) {
         //subo el almacen de metal cuando  la planta de energía solar -10 / 2 sea mayor al nivel del almacén
@@ -113,5 +115,22 @@ public class Utils {
         database.ejecutarSQL(insert.getSql());
         database.killConnection();
     }
+
+    public static int getUniverso() {
+        if(universo==0){
+            ManageDB database = new ManageDB();
+            try {
+                ResultSet rs = database.ejecutarSQLSelect(SelectSQL.GET_UNIVERSO);
+                if(rs.next()) {
+                    universo = rs.getInt("universo");
+                }
+            } catch (SQLException ex) {
+                System.err.println(ex.getMessage());
+            }finally{
+                database.killConnection();
+            }
+        }
+        return universo;
+    }    
     
 }

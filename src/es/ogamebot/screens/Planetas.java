@@ -5,6 +5,7 @@ import com.gargoylesoftware.htmlunit.html.DomNodeList;
 import com.gargoylesoftware.htmlunit.html.HtmlDivision;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import es.ogamebot.utils.Utils;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -21,7 +22,7 @@ public class Planetas {
     public Planetas(WebClient webClient) throws IOException{
         this.webClient=webClient;
         
-        page = this.webClient.getPage("http://s132-es.ogame.gameforge.com/game/index.php?page=overview");
+        page = this.webClient.getPage("http://s"+Utils.getUniverso()+"-es.ogame.gameforge.com/game/index.php?page=overview");
         //obtener la lista de los planetas
         HtmlDivision planetList = (HtmlDivision) page.getElementById("planetList");
         DomNodeList<HtmlElement> planetElements = planetList.getElementsByTagName("div");
@@ -30,7 +31,6 @@ public class Planetas {
             planets.add(div.getId().replaceAll("[\\D]", ""));
             underAttack.add(checkIsUnderAttack(div));
         }
-        close();
     }
     
     /**
@@ -71,8 +71,4 @@ public class Planetas {
         return buff;
     }
     
-    private void close(){
-       page.cleanUp();
-       page.remove();
-   }
 }

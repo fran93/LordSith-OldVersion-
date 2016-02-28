@@ -9,6 +9,9 @@ public class SelectSQL {
     public static final String GET_PROPERTIES = "select * from properties";
     public static final String GET_GRANJA_POSITION = "select posicion from posiciones where id=1";
     public static final String GET_EXPEDICION_POSITION = "select posicion from posiciones where id=2";
+    public static final String GET_LOGIN = "select user, password from cuentas where id=1";
+    public static final String GET_UNIVERSO = "select universo from cuentas where id=1";
+
     private String sql;
     
     public SelectSQL(String tabla, Object[] parameters){

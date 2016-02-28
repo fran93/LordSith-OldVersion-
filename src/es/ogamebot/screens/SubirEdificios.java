@@ -6,6 +6,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlDivision;
 import com.gargoylesoftware.htmlunit.html.HtmlInput;
 import com.gargoylesoftware.htmlunit.html.HtmlListItem;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import es.ogamebot.utils.Utils;
 import java.io.IOException;
 
 /**
@@ -37,7 +38,7 @@ public class SubirEdificios {
     }
 
     public void subir() throws IOException, InterruptedException {
-        page = webClient.getPage("http://s132-es.ogame.gameforge.com/game/index.php?page=resources&cp="+cp);
+        page = webClient.getPage("http://s"+Utils.getUniverso()+"-es.ogame.gameforge.com/game/index.php?page=resources&cp="+cp);
 
         switch (tipo) {
             case 0:
@@ -99,7 +100,7 @@ public class SubirEdificios {
                 break;   
             case 7:
                 //ir al Hangar 
-                page = webClient.getPage("http://s132-es.ogame.gameforge.com/game/index.php?page=shipyard&cp="+cp);
+                page = webClient.getPage("http://s"+Utils.getUniverso()+"-es.ogame.gameforge.com/game/index.php?page=shipyard&cp="+cp);
                 //abrir la ventana para introducir la cantidad
                 HtmlAnchor satelite = (HtmlAnchor) page.getElementById("details212");
                 webClient.waitForBackgroundJavaScript(5000);
@@ -113,8 +114,6 @@ public class SubirEdificios {
                 build.click();
                 break;
         }
-        
-        page.cleanUp();
-        page.remove();
+       
     }
 }

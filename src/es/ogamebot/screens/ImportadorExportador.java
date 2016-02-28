@@ -23,7 +23,7 @@ public class ImportadorExportador {
             //obteniendo los datos
             //se ejecuta solo a las 00:00
             if(new GregorianCalendar().get(Calendar.HOUR_OF_DAY)==0){
-                page = this.webClient.getPage("http://s132-es.ogame.gameforge.com/game/index.php?page=traderOverview&cp="+cp+"#animation=false&page=traderImportExport");    
+                page = this.webClient.getPage("http://s"+Utils.getUniverso()+"-es.ogame.gameforge.com/game/index.php?page=traderOverview&cp="+cp+"#animation=false&page=traderImportExport");    
             }else{
                 page = null;
             }

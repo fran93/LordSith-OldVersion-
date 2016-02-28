@@ -10,7 +10,6 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import es.ogamebot.database.ManageDB;
 import es.ogamebot.database.SelectSQL;
 import es.ogamebot.database.UpdateSQL;
-import es.ogamebot.utils.Loading;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,7 +30,7 @@ public class Expediciones {
     public Expediciones(WebClient webClient, ReadDB properties, String cp) throws IOException {
         this.webClient = webClient;
         //obteniendo datos..
-        page = this.webClient.getPage("http://s132-es.ogame.gameforge.com/game/index.php?page=fleet1&cp="+cp);
+        page = this.webClient.getPage("http://s"+Utils.getUniverso()+"-es.ogame.gameforge.com/game/index.php?page=fleet1&cp="+cp);
         //obteniendo las flotas
         HtmlDivision slots = (HtmlDivision) page.getElementById("slots");
         //obteniendo div de las expediciones
@@ -73,7 +72,7 @@ public class Expediciones {
                 sistema = 104;
             }
             //página que te selecciona automáticamente la misión expedición
-            page = webClient.getPage("http://s132-es.ogame.gameforge.com/game/index.php?page=fleet1&mission=15&position=16&galaxy=2&system="+sistema+"&type=1");
+            page = webClient.getPage("http://s"+Utils.getUniverso()+"-es.ogame.gameforge.com/game/index.php?page=fleet1&mission=15&position=16&galaxy=2&system="+sistema+"&type=1");
             //añadir cargueras grandes
             HtmlInput bigShipInput = (HtmlInput) page.getElementById("ship_203");
             bigShipInput.setValueAttribute(bigCargo);
@@ -104,12 +103,7 @@ public class Expediciones {
             Utils.printLog("Mi emperador, la expedición no pudo ser enviada por causa de problemas técnicos.");
         }
     }
-    
-    public void close(){
-       page.cleanUp();
-       page.remove();
-   }
-    
+        
     private int getExpPosition() {
         try{
         ManageDB database = new ManageDB();

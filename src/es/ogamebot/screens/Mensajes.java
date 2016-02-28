@@ -30,7 +30,7 @@ public class Mensajes {
      * @throws IOException 
      */
     public void BorrarOtrosMensajes() throws IOException, IndexOutOfBoundsException{
-        page = this.webClient.getPage("http://s132-es.ogame.gameforge.com/game/index.php?page=messages");
+        page = this.webClient.getPage("http://s"+Utils.getUniverso()+"-es.ogame.gameforge.com/game/index.php?page=messages");
         HtmlAnchor others = (HtmlAnchor)page.getElementById("ui-id-21");
         //esperar a que el elemento cargue
         while(others==null){
@@ -74,7 +74,7 @@ public class Mensajes {
      * @throws IOException 
      */
     public void BorrarMensajesBatalla() throws IOException, IndexOutOfBoundsException{
-        page = this.webClient.getPage("http://s132-es.ogame.gameforge.com/game/index.php?page=messages");
+        page = this.webClient.getPage("http://s"+Utils.getUniverso()+"-es.ogame.gameforge.com/game/index.php?page=messages");
         HtmlAnchor battles = (HtmlAnchor)page.getElementById("ui-id-15");
         //esperar a que el elemento cargue
         while(battles==null){
@@ -133,12 +133,5 @@ public class Mensajes {
             Utils.printLog("Mi emperador, se han descartado "+cantidad+" mensajes que no eran importantes.");
         }
     }
-    
-    /**
-     * Cierra la página del navegador
-     */
-    public void close(){
-        page.cleanUp();
-        page.remove();
-    }
+
 }

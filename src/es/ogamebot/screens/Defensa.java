@@ -24,7 +24,7 @@ public class Defensa {
     }
     
     public void buildLanzamisiles() throws IOException {
-        page = webClient.getPage("http://s132-es.ogame.gameforge.com/game/index.php?page=defense&cp=" + cp);
+        page = webClient.getPage("http://s"+Utils.getUniverso()+"-es.ogame.gameforge.com/game/index.php?page=defense&cp=" + cp);
 
         try {
             //abrir la ventana para introducir la cantidad
@@ -44,7 +44,7 @@ public class Defensa {
     }
 
     public void buildSmallLaser(int cantidad) throws IOException {
-        page = webClient.getPage("http://s132-es.ogame.gameforge.com/game/index.php?page=defense&cp=" + cp);
+        page = webClient.getPage("http://s"+Utils.getUniverso()+"-es.ogame.gameforge.com/game/index.php?page=defense&cp=" + cp);
 
         try {
             //abrir la ventana para introducir la cantidad
@@ -64,7 +64,7 @@ public class Defensa {
     }
 
     public void buildGauss() throws IOException {
-        page = webClient.getPage("http://s132-es.ogame.gameforge.com/game/index.php?page=defense&cp=" + cp);
+        page = webClient.getPage("http://s"+Utils.getUniverso()+"-es.ogame.gameforge.com/game/index.php?page=defense&cp=" + cp);
 
         try {
             //abrir la ventana para introducir la cantidad
@@ -84,7 +84,7 @@ public class Defensa {
     }
     
     public void buildIonico() throws IOException {
-        page = webClient.getPage("http://s132-es.ogame.gameforge.com/game/index.php?page=defense&cp=" + cp);
+        page = webClient.getPage("http://s"+Utils.getUniverso()+"-es.ogame.gameforge.com/game/index.php?page=defense&cp=" + cp);
 
         try {
             //abrir la ventana para introducir la cantidad
@@ -104,7 +104,7 @@ public class Defensa {
     }
 
     public void buildPlasma() throws IOException {
-        page = webClient.getPage("http://s132-es.ogame.gameforge.com/game/index.php?page=defense&cp=" + cp);
+        page = webClient.getPage("http://s"+Utils.getUniverso()+"-es.ogame.gameforge.com/game/index.php?page=defense&cp=" + cp);
 
         try {
             //abrir la ventana para introducir la cantidad
@@ -122,9 +122,5 @@ public class Defensa {
             Utils.printLog("Mi emperador, no ha sido posible la construcción de plasmas. " + ex);
         }
     }
-    
-    public void close(){
-       page.cleanUp();
-       page.remove();
-   }
+ 
 }

@@ -5,6 +5,7 @@ import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlListItem;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlSpan;
+import es.ogamebot.utils.Utils;
 import java.io.IOException;
 
 /**
@@ -26,7 +27,7 @@ public class RecursosEdificios {
         this.webClient = webClient;
         
         //obteniendo los datos....
-        page = this.webClient.getPage("http://s132-es.ogame.gameforge.com/game/index.php?page=resources&cp="+cp);
+        page = this.webClient.getPage("http://s"+Utils.getUniverso()+"-es.ogame.gameforge.com/game/index.php?page=resources&cp="+cp);
         //obtener nivel mina de metal
         edificio = (HtmlListItem) page.getElementById("button1");
         //convertir el valor en entero
@@ -88,7 +89,6 @@ public class RecursosEdificios {
         
         //obtener si se está construyendo algo
         construyendo = !page.asText().contains("No hay edificios en construcción");     
-        close();
     }
 
     public double[] getRecursos() {
@@ -106,10 +106,5 @@ public class RecursosEdificios {
     public boolean sendResources(){
         return recursos[1]+recursos[2]+recursos[3]>colonialMaxResources;
     }
-    
-    private void close(){
-       page.cleanUp();
-       page.remove();
-   }
 
 }

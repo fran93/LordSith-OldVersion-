@@ -1,6 +1,5 @@
 package es.ogamebot;
 
-import es.ogamebot.utils.Password;
 import es.ogamebot.screens.Mensajes;
 import es.ogamebot.screens.Planetas;
 import es.ogamebot.screens.Login;
@@ -29,7 +28,6 @@ public class Main {
     public static void main(String[] args) {
         //desactivar los warnings
         java.util.logging.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(Level.OFF);
-        Password pass = new Password();
         try (WebClient webClient = new WebClient(BrowserVersion.FIREFOX_38)) {
             //redirecciones permitidas, nada de excepciones en javascript, y css deshabilitado
             webClient.getOptions().setJavaScriptEnabled(true);
@@ -41,7 +39,7 @@ public class Main {
             webClient.getOptions().setTimeout(60000);
             Utils.exitWhenTimeOut();
             //me logueo
-            Login log = new Login(webClient, pass.getUser(), pass.getPassword());
+            Login log = new Login(webClient);
             //obtener todos los planetas para realizar tareas en ellos
             Planetas planet = new Planetas(webClient);
             //archivo de propiedades
@@ -70,7 +68,6 @@ public class Main {
                         Defensa defender = new Defensa(webClient, planet.get(i));
                         defender.buildPlasma();
                         defender.buildGauss();
-                        defender.close();
                     }else{
                         //en las colonias mando los recursos al principal
                         Colonias colonias = new Colonias(webClient, properties, planet.get(i));
@@ -82,7 +79,6 @@ public class Main {
                 if (colonias.isSlotFree() && resources.sendResources() && i != 0) {
                     colonias.enviarRecursos();
                 }
-                colonias.close();
             }
 
             //ataques y expediciones
@@ -94,15 +90,12 @@ public class Main {
                 }
                 ata.atacar();
             }
-            exp.close();
-            ata.close();
 
             //Mensajes
             Mensajes mensaje = new Mensajes(webClient);
             mensaje.BorrarOtrosMensajes();
             mensaje.BorrarMensajesBatalla();
             mensaje.imprimirResultado();
-            mensaje.close();
             //me deslogueo
             log.salir();
             //liberar memoria

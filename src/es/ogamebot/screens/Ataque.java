@@ -138,11 +138,6 @@ public class Ataque {
         actuales = Integer.parseInt(dummy[0].replaceAll("[\\D]", ""));
    }
    
-   public void close(){
-       page.cleanUp();
-       page.remove();
-   }
-
     private int getFarmPosition() {
         try{
         ManageDB database = new ManageDB();
